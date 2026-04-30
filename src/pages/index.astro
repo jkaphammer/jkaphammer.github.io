@@ -2,63 +2,64 @@
 import BaseLayout from "../layouts/Layout.astro";
 
 const focusAreas = [
-	"Frontend development with accessible, human-centered UI decisions",
-	"Thoughtful collaboration across design, product, and engineering",
-	"Clear case studies that explain both process and outcome",
+	"Python & SQL",
+	"Professional gigging musician - songwriting, drums, percussion",
 ];
 ---
 
 <BaseLayout
-	title="Jenn Kaphammer | Home"
+	title="Kaphammer | Home"
 	description="Introductory homepage for Jenn Kaphammer's portfolio."
 >
 	<main class="mx-auto flex min-h-[calc(100vh-5rem)] w-full max-w-site items-center px-4 pb-16 pt-8 sm:px-6 lg:px-8">
-		<section class="grid w-full gap-6 lg:grid-cols-[minmax(0,1.35fr)_22rem] lg:items-stretch">
-			<div class="rounded-panel border border-theme-line bg-theme-panel/80 p-6 shadow-soft backdrop-blur md:p-8 lg:p-10">
-				<p class="mb-4 text-xs font-semibold uppercase tracking-[0.24em] text-brand-700">
+		<section class="grid w-full justify-items-center gap-6 lg:items-stretch">
+			<div class="relative w-full max-w-4xl overflow-hidden rounded-panel border border-baltic-blue-200/60 bg-[linear-gradient(145deg,color-mix(in_oklab,var(--palette-sky-aqua-50)_68%,white),color-mix(in_oklab,var(--palette-rosy-granite-50)_74%,white))] p-6 shadow-soft backdrop-blur md:p-8 lg:p-10">
+				<div class="pointer-events-none absolute right-[-3rem] top-[-3rem] h-36 w-36 rounded-full bg-sky-aqua-300/28 blur-3xl"></div>
+				<div class="pointer-events-none absolute bottom-[-4rem] left-[22%] h-40 w-40 rounded-full bg-midnight-violet-200/10 blur-3xl"></div>
+
+				<p class="mb-4 text-xs font-semibold uppercase tracking-[0.28em] text-baltic-blue-700">
 					Portfolio in progress
 				</p>
-				<h1 class="max-w-3xl font-display text-5xl leading-[0.95] tracking-[-0.04em] text-theme-ink sm:text-6xl lg:text-7xl">
-					Hi, I'm Jenn. I build thoughtful digital experiences and I care about how they feel to use.
+				<h1 class="relative z-10 max-w-3xl font-display text-5xl leading-[0.92] tracking-[-0.05em] text-baltic-blue-950 sm:text-6xl lg:text-7xl">
+					Hi, I'm Jenn!
 				</h1>
-				<p class="mt-6 max-w-2xl text-base leading-8 text-theme-muted sm:text-lg">
-					This homepage is intentionally simple so it can act as a strong introduction. As the
-					site grows, the navigation will carry the deeper story through dedicated projects,
-					about, and contact pages.
+				<p class="relative z-10 mt-6 max-w-2xl text-base leading-8 text-baltic-blue-700 sm:text-lg">
+					My interactive website is under-construction. Thanks for checking it out!
+          Reach out to me via LinkedIn or email.
 				</p>
 
-				<div class="mt-8 flex flex-col gap-3 sm:flex-row">
+				<!-- <div class="mt-8 flex flex-col gap-3 sm:flex-row">
 					<a
 						href="/projects"
-						class="inline-flex items-center justify-center rounded-full bg-brand-600 px-6 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-brand-700"
+						class="inline-flex items-center justify-center rounded-full bg-baltic-blue-600 px-6 py-3 text-sm font-semibold text-white shadow-[0_10px_30px_color-mix(in_srgb,var(--palette-baltic-blue-700)_28%,transparent)] transition duration-200 hover:-translate-y-0.5 hover:bg-baltic-blue-700"
 					>
 						View projects
 					</a>
 					<a
 						href="/about"
-						class="inline-flex items-center justify-center rounded-full border border-theme-line bg-white/60 px-6 py-3 text-sm font-semibold text-theme-ink transition hover:-translate-y-0.5 hover:bg-white/80"
+						class="inline-flex items-center justify-center rounded-full border border-baltic-blue-200/70 bg-white/55 px-6 py-3 text-sm font-semibold text-baltic-blue-900 transition duration-200 hover:-translate-y-0.5 hover:border-sky-aqua-400 hover:bg-sky-aqua-50/80"
 					>
 						Read more about me
-					</a>
+					</a> -->
 				</div>
 			</div>
 
-			<aside class="rounded-panel border border-theme-line bg-theme-surface p-6 shadow-soft backdrop-blur md:p-8">
-				<p class="mb-4 text-xs font-semibold uppercase tracking-[0.24em] text-brand-700">
-					What belongs here
+			<!-- <aside class="rounded-panel border border-tea-green-200/70 bg-[linear-gradient(180deg,color-mix(in_oklab,var(--palette-tea-green-50)_76%,white),color-mix(in_oklab,var(--palette-sky-aqua-50)_32%,white))] p-6 shadow-soft backdrop-blur md:p-8">
+				<p class="mb-4 text-xs font-semibold uppercase tracking-[0.28em] text-tea-green-800">
+					Who am I?
 				</p>
-				<h2 class="font-display text-3xl leading-tight tracking-[-0.03em] text-theme-ink">
-					A quick snapshot of your strengths
+				<h2 class="font-display text-3xl leading-tight tracking-[-0.04em] text-baltic-blue-900">
+          Data-Driven Software Enginner & Creator
 				</h2>
-				<ul class="mt-6 space-y-4 text-sm leading-7 text-theme-muted">
+				<ul class="mt-6 space-y-4 text-sm leading-7 text-baltic-blue-700">
 					{focusAreas.map((area) => (
 						<li class="flex gap-3">
-							<span class="mt-2 h-2.5 w-2.5 shrink-0 rounded-full bg-brand-500"></span>
+							<span class="mt-2 h-2.5 w-2.5 shrink-0 rounded-full bg-tea-green-500 shadow-[0_0_0_6px_color-mix(in_srgb,var(--palette-tea-green-100)_55%,transparent)]"></span>
 							<span>{area}</span>
 						</li>
 					))}
 				</ul>
-			</aside>
+			</aside> -->
 		</section>
 	</main>
 </BaseLayout>
