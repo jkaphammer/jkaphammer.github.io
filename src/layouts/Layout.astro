@@ -1,3 +1,24 @@
+---
+import "../styles/global.css";
+
+interface Props {
+	title?: string;
+	description?: string;
+}
+
+const {
+	title = "Jenn Kaphammer | Portfolio",
+	description = "Portfolio site for Jenn Kaphammer featuring projects, experience, and contact information.",
+} = Astro.props;
+
+const pathname = Astro.url.pathname;
+const navigation = [
+	{ href: "/", label: "Home" },
+	{ href: "/projects", label: "Projects" },
+	{ href: "/about", label: "About" }
+];
+---
+
 <!doctype html>
 <html lang="en">
 	<head>
@@ -6,18 +27,48 @@
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="icon" href="/favicon.ico" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
+		<meta name="description" content={description} />
+		<title>{title}</title>
 	</head>
-	<body>
-		<slot />
+	<body class="min-w-80 bg-theme-bg font-sans text-theme-ink antialiased">
+		<div class="relative isolate min-h-screen overflow-x-hidden">
+			<div class="pointer-events-none fixed left-[-8rem] top-24 -z-10 h-72 w-72 rounded-full bg-brand-300/25 blur-3xl"></div>
+			<div class="pointer-events-none fixed bottom-28 right-[-4rem] -z-10 h-56 w-56 rounded-full bg-earth-300/20 blur-3xl"></div>
+
+			<header class="mx-auto w-full max-w-site px-4 pt-4 sm:px-6 lg:px-8">
+				<div class="flex items-center justify-between rounded-full border border-theme-line bg-theme-panel/75 px-4 py-3 shadow-soft backdrop-blur md:px-6">
+					<a href="/" class="text-sm font-semibold tracking-[0.18em] text-theme-ink uppercase">
+						Jenn Kaphammer
+					</a>
+
+					<nav aria-label="Primary navigation">
+						<ul class="flex items-center gap-1 text-sm text-theme-muted sm:gap-2">
+							{navigation.map((item) => {
+								const isActive = pathname === item.href;
+
+								return (
+									<li>
+										<a
+											href={item.href}
+											aria-current={isActive ? "page" : undefined}
+											class:list={[
+												"rounded-full px-3 py-2 transition",
+												isActive
+													? "bg-brand-100 text-brand-800"
+													: "hover:bg-white/60 hover:text-theme-ink",
+											]}
+										>
+											{item.label}
+										</a>
+									</li>
+								);
+							})}
+						</ul>
+					</nav>
+				</div>
+			</header>
+
+			<slot />
+		</div>
 	</body>
 </html>
-
-<style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
-</style>

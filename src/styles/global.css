@@ -1,0 +1,86 @@
+@import "tailwindcss";
+
+:root {
+	--palette-bg: #f5efe7;
+	--palette-panel: #fffaf4;
+	--palette-surface: rgba(255, 252, 247, 0.82);
+	--palette-ink: #1f1a17;
+	--palette-muted: #5f564f;
+	--palette-line: rgba(92, 63, 42, 0.14);
+	--palette-brand-50: #f7ede7;
+	--palette-brand-100: #efd8ca;
+	--palette-brand-300: #d7a98b;
+	--palette-brand-500: #b7734d;
+	--palette-brand-600: #9a5f3f;
+	--palette-brand-700: #7f4729;
+	--palette-earth-300: #c0a38a;
+	--shadow-soft: 0 24px 60px rgba(78, 50, 31, 0.12);
+	--radius-panel: 2rem;
+	--radius-card: 1.25rem;
+	--site-max-width: 1120px;
+	--font-sans-stack: "Avenir Next", "Segoe UI", "Helvetica Neue", sans-serif;
+	--font-display-stack: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+}
+
+@theme inline {
+	--color-theme-bg: var(--palette-bg);
+	--color-theme-panel: var(--palette-surface);
+	--color-theme-surface: var(--palette-panel);
+	--color-theme-ink: var(--palette-ink);
+	--color-theme-muted: var(--palette-muted);
+	--color-theme-line: var(--palette-line);
+	--color-brand-50: var(--palette-brand-50);
+	--color-brand-100: var(--palette-brand-100);
+	--color-brand-300: var(--palette-brand-300);
+	--color-brand-500: var(--palette-brand-500);
+	--color-brand-600: var(--palette-brand-600);
+	--color-brand-700: var(--palette-brand-700);
+	--color-brand-800: color-mix(in srgb, var(--palette-brand-700) 88%, black);
+	--color-earth-300: var(--palette-earth-300);
+	--font-sans: var(--font-sans-stack);
+	--font-display: var(--font-display-stack);
+	--radius-panel: var(--radius-panel);
+	--radius-card: var(--radius-card);
+	--shadow-soft: var(--shadow-soft);
+	--spacing-site: var(--site-max-width);
+}
+
+@layer base {
+	* {
+		box-sizing: border-box;
+	}
+
+	html {
+		scroll-behavior: smooth;
+	}
+
+	body {
+		margin: 0;
+		min-height: 100vh;
+		background:
+			radial-gradient(circle at top left, rgb(255 255 255 / 0.9), transparent 32%),
+			radial-gradient(circle at 85% 15%, rgb(191 161 129 / 0.18), transparent 22%),
+			linear-gradient(180deg, #f8f1e8 0%, var(--palette-bg) 54%, #efe6db 100%);
+	}
+
+	a {
+		color: inherit;
+		text-decoration: none;
+	}
+
+	img {
+		display: block;
+		max-width: 100%;
+	}
+
+	h1,
+	h2,
+	h3,
+	h4 {
+		margin: 0;
+	}
+
+	p {
+		margin: 0;
+	}
+}
