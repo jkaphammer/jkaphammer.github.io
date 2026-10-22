@@ -1,5 +1,5 @@
 # jkaphammer.github.io
-Hi, I'm Jenn. Welcome to my little portfolio website!
+Hi, I'm Jenn. Welcome to my little portfolio website! kaphammer.xyz
 
 ## This domain is under construction while I migrate from a class project to a full tech-stack. In the mean time, connect with me on https://www.linkedin.com/in/jenn-kaphammer/
 
