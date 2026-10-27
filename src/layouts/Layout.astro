@@ -1,114 +1,142 @@
 ---
+import { ClientRouter } from "astro:transitions";
+import MusicPlayer from "../components/MusicPlayer.astro";
 import "../styles/global.css";
 import EmailIcon from "../components/icons/EmailIcon.astro";
 import GitHubIcon from "../components/icons/GitHubIcon.astro";
 import LinkedInIcon from "../components/icons/LinkedInIcon.astro";
 
 interface Props {
-	title?: string;
-	description?: string;
+  title?: string;
+  description?: string;
 }
 
 const {
-	title = "Kaphammer | Portfolio",
-	description = "Portfolio site for Jenn Kaphammer featuring projects, experience, and contact information.",
+  title = "Jenn Kaphammer | Portfolio",
+  description = "Software engineering, audio, and creative technology.",
 } = Astro.props;
 
 const pathname = Astro.url.pathname;
+
 const navigation = [
-	{ href: "/", label: "Home" }
-	// { href: "/projects", label: "Projects" },
-	// { href: "/about", label: "About" }
+  { href: "/", label: "Home" },
+  { href: "/projects", label: "Index" }
 ];
 
 const contactLinks = [
-	{
-		href: "https://github.com/jkaphammer",
-		label: "GitHub",
-		external: true,
-	},
-	{
-		href: "https://linkedin.com/in/jenn-kaphammer",
-		label: "LinkedIn",
-		external: true,
-	},
-	{
-		href: "mailto:jennkaphammer@gmail.com",
-		label: "Email",
-		external: false,
-	},
+  { href: "https://github.com/jkaphammer", label: "GitHub", external: true },
+  { href: "https://www.linkedin.com/in/jenn-kaphammer/", label: "LinkedIn", external: true },
+  { href: "mailto:jennkaphammer@gmail.com", label: "Email", external: false },
 ];
 ---
 
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<!-- <link rel="icon" type="image/svg+xml" href="/favicon.svg" /> -->
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="generator" content={Astro.generator} />
-		<meta name="description" content={description} />
-		<title>{title}</title>
-	</head>
-	<body class="min-w-80 bg-theme-bg font-sans text-theme-ink antialiased">
-		<div class="relative isolate min-h-screen overflow-x-hidden">
-			<div class="pointer-events-none fixed left-[-8rem] top-24 -z-10 h-72 w-72 rounded-full bg-sky-aqua-300/20 blur-3xl"></div>
-			<div class="pointer-events-none fixed bottom-28 right-[-4rem] -z-10 h-56 w-56 rounded-full bg-tea-green-300/18 blur-3xl"></div>
-			<div class="pointer-events-none fixed right-[18%] top-[10%] -z-10 h-40 w-40 rounded-full bg-midnight-violet-200/12 blur-3xl"></div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+	<ClientRouter />
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+	
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=DM+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap"
+      rel="stylesheet"
+    />
 
-			<header class="mx-auto w-full max-w-site px-4 pt-4 sm:px-6 lg:px-8">
-				<div class="flex flex-wrap items-center justify-between gap-3 rounded-full border border-baltic-blue-200/60 bg-theme-panel/70 px-4 py-3 shadow-soft backdrop-blur-xl md:px-6">
-					<a href="/" class="text-sm font-semibold tracking-[0.22em] text-baltic-blue-900 uppercase">
-						Jenn Kaphammer
+    <title>{title}</title>
+  </head>
+
+  <body class="min-w-80 antialiased">
+    <div class="min-h-screen">
+      <header class="mx-auto max-w-[1500px] px-5 pt-5 sm:px-8 lg:px-12">
+        <div class="flex flex-wrap items-center justify-between gap-4 pb-5">
+
+          <a href="/" class="group flex items-center gap-2" aria-label="Jenn Kaphammer — Home">
+            <span class="font-expressive text-2xl font-extrabold tracking-tight text-baltic-blue-950">
+              JAK<span class="text-sky-aqua-600"></span>
+            </span>
+            <span class="font-technical hidden text-[10px] uppercase tracking-wider text-baltic-blue-600 sm:block">
+              code + music + life
+            </span>
+          </a>
+
+          <div class="flex items-center gap-4 sm:gap-7">
+            <nav aria-label="Primary navigation">
+              <ul class="flex items-center gap-4 sm:gap-6">
+                {navigation.map((item) => {
+                  const isActive = pathname === item.href;
+
+                  return (
+                    <li>
+                      <a
+                        href={item.href}
+                        aria-current={isActive ? "page" : undefined}
+                        class:list={[
+                          "font-technical border-b pb-1 text-xs uppercase tracking-wide transition-colors",
+                          isActive
+                            ? "border-baltic-blue-900 text-baltic-blue-950"
+                            : "border-transparent text-baltic-blue-600 hover:border-sky-aqua-500 hover:text-baltic-blue-950",
+                        ]}
+                      >
+                        {item.label}
+                      </a>
+                    </li>
+                  );
+                })}
+              </ul>
+            </nav>
+
+            <div class="flex items-center gap-4 border-l border-baltic-blue-300/70 pl-4 sm:pl-6">
+				{contactLinks.map((link) => (
+					<a
+					href={link.href}
+					aria-label={link.label}
+					target={link.external ? "_blank" : undefined}
+					rel={link.external ? "noopener noreferrer" : undefined}
+					class="text-baltic-blue-700 transition-colors hover:text-sky-aqua-600"
+					>
+					{link.label === "GitHub" && <GitHubIcon class="h-6 w-6 fill-current" />}
+					{link.label === "LinkedIn" && <LinkedInIcon class="h-6 w-6 fill-current" />}
+					{link.label === "Email" && <EmailIcon class="h-6 w-6 fill-current" />}
 					</a>
+				))}
+			</div>
 
-					<div class="flex items-center gap-3">
-						<nav aria-label="Primary navigation">
-							<ul class="flex items-center gap-1 text-sm text-baltic-blue-700 sm:gap-2">
-								{navigation.map((item) => {
-									const isActive = pathname === item.href;
+        <div class="h-px bg-baltic-blue-700/70"></div>
+      </header>
 
-									return (
-										<li>
-											<a
-												href={item.href}
-												aria-current={isActive ? "page" : undefined}
-												class:list={[
-													"rounded-full px-3 py-2 transition duration-200",
-													isActive
-														? "bg-baltic-blue-100 text-baltic-blue-900 shadow-[inset_0_0_0_1px_color-mix(in_oklab,var(--palette-baltic-blue-200)_70%,transparent)]"
-														: "hover:bg-white/55 hover:text-baltic-blue-900",
-												]}
-											>
-												{item.label}
-											</a>
-										</li>
-									);
-								})}
-							</ul>
-						</nav>
+	  <slot />
 
-						<div class="flex items-center gap-1.5 border-l border-baltic-blue-200/70 pl-2 sm:pl-3">
-							{contactLinks.map((link) => (
-								<a
-									href={link.href}
-									aria-label={link.label}
-									target={link.external ? "_blank" : undefined}
-									rel={link.external ? "noreferrer" : undefined}
-									class="rounded-full p-2 text-baltic-blue-700 transition duration-200 hover:bg-white/55 hover:text-baltic-blue-900"
-								>
-									{link.label === "GitHub" && <GitHubIcon class="h-5 w-5 fill-current" />}
-									{link.label === "LinkedIn" && <LinkedInIcon class="h-5 w-5 fill-current" />}
-									{link.label === "Email" && <EmailIcon class="h-5 w-5 fill-current" />}
-								</a>
-							))}
-						</div>
-					</div>
-				</div>
-			</header>
+	  <div
+		transition:persist="global-music-player"
+		class="mx-auto w-full max-w-[1500px] px-5 py-10 sm:px-8 lg:px-12"
+		>
+		<MusicPlayer
+			src="debussy1.mp3"
+			title="Arabesque No. 1, L. 66"
+			artist="Claude Debussy (from www.classicals.de)"
+		/>
+	</div>
+<div
+  transition:persist="global-music-player"
+  class="mx-auto w-full max-w-[1500px] px-5 py-10 sm:px-8 lg:px-12"
+>
 
-			<slot />
-		</div>
-	</body>
+</div>
+
+      <footer class="mx-auto max-w-[1500px] px-5 pb-8 pt-12 sm:px-8 lg:px-12">
+        <div class="flex flex-wrap justify-between gap-3 border-t border-baltic-blue-300/70 pt-5">
+          <span class="font-technical text-xs text-baltic-blue-600">
+            © {new Date().getFullYear()} JENN KAPHAMMER
+          </span>
+          <span class="font-technical text-xs text-baltic-blue-600">
+            CODE / SOUND / EXPERIMENT
+          </span>
+        </div>
+      </footer>
+    </div>
+  </body>
 </html>

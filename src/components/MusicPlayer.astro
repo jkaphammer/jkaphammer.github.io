@@ -1,0 +1,694 @@
+---
+interface Props {
+  src: string;
+  title: string;
+  artist?: string;
+}
+
+const {
+  src,
+  title,
+  artist = "Jenn Kaphammer",
+} = Astro.props;
+---
+
+<div class="analog-player">
+  <div class="rack-header">
+    <div>
+      <strong>JAK / AUDIO LAB</strong>
+      <small>STEREO PLAYBACK MODULE — 001</small>
+    </div>
+    <div class="power-label">
+      <span class="power-led"></span>
+      POWER
+    </div>
+  </div>
+
+  <div class="analog-display">
+    <div class="display-header">
+      <span>TRACK 01 / STEREO</span>
+      <span id="audio-status">STANDBY</span>
+    </div>
+
+    <h3>{title}</h3>
+    <p>{artist}</p>
+
+    <canvas
+      id="level-meter"
+      width="500"
+      height="80"
+      aria-label="Audio level visualization"
+    ></canvas>
+
+    <div class="display-footer">
+      <span id="current-time">00:00</span>
+      <input
+        id="audio-seek"
+        type="range"
+        min="0"
+        max="100"
+        value="0"
+        step="0.1"
+        aria-label="Seek through track"
+      />
+      <span id="total-time">00:00</span>
+    </div>
+  </div>
+
+  <div class="analog-controls">
+    <div class="control-block">
+      <span class="control-label">OUTPUT</span>
+
+      <div class="knob-shell">
+        <div id="volume-knob" class="volume-knob">
+          <span class="knob-indicator"></span>
+        </div>
+      </div>
+
+      <input
+        id="volume-control"
+        type="range"
+        min="0"
+        max="100"
+        value="70"
+        aria-label="Output volume"
+      />
+
+      <span class="control-label">LEVEL</span>
+    </div>
+
+    <div class="control-block">
+      <span class="control-label">TRANSPORT</span>
+
+      <button
+        id="audio-play"
+        type="button"
+        class="transport-button"
+        aria-label="Play audio"
+      >
+        <span id="transport-symbol">▶</span>
+      </button>
+
+      <span class="control-label" id="transport-label">PLAY</span>
+    </div>
+
+    <div class="control-block">
+      <span class="control-label">CHANNEL</span>
+
+      <div class="channel-display">
+        <span>L</span>
+        <span class="channel-light"></span>
+        <span>R</span>
+      </div>
+
+      <span class="control-label">STEREO</span>
+    </div>
+  </div>
+
+  <div class="rack-footer">
+    <span>JAK — SIGNAL SERIES</span>
+    <span>REV. 001</span>
+  </div>
+
+  <audio id="analog-audio" src={src} preload="metadata"></audio>
+</div>
+
+<style>
+  .analog-player {
+    background: #263c55;
+    color: #dbe8ed;
+    border: 1px solid #7693a6;
+    padding: 24px;
+    font-family: "IBM Plex Mono", monospace;
+    box-shadow:
+      inset 0 2px 2px #ffffff20,
+      0 12px 28px #071a2b35;
+  }
+
+  .rack-header,
+  .rack-footer,
+  .display-header,
+  .display-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .rack-header {
+    margin-bottom: 20px;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+  }
+
+  .rack-header small {
+    display: block;
+    margin-top: 5px;
+    color: #91adbd;
+    font-size: 9px;
+  }
+
+  .power-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 10px;
+  }
+
+  .power-led,
+  .channel-light {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: #9ad9c9;
+    box-shadow: 0 0 9px #9ad9c980;
+  }
+
+  .analog-display {
+    background: #0d1e30;
+    border: 2px solid #10283b;
+    padding: 18px;
+    box-shadow: inset 0 4px 14px #0008;
+  }
+
+  .display-header {
+    color: #91b3c1;
+    font-size: 10px;
+  }
+
+  .analog-display h3 {
+    margin-top: 18px;
+    font-size: 20px;
+    color: #d9ebed;
+    font-weight: 500;
+  }
+
+  .analog-display p {
+    margin-top: 5px;
+    color: #8db4c6;
+    font-size: 12px;
+  }
+
+  #level-meter {
+    display: block;
+    width: 100%;
+    height: 95px;
+    margin: 14px 0;
+  }
+
+  .display-footer {
+    color: #a2d8de;
+    font-size: 11px;
+  }
+
+  #audio-seek {
+    flex: 1;
+    min-width: 0;
+    accent-color: #9fd5d8;
+    cursor: pointer;
+  }
+
+  .analog-controls {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+    margin-top: 20px;
+  }
+
+  .control-block {
+    min-width: 0;
+    min-height: 155px;
+    padding: 14px 8px;
+    background: #20344a;
+    border: 1px solid #58748c;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+  }
+
+  .control-label {
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    color: #b1c7d2;
+    text-align: center;
+  }
+
+  .knob-shell {
+    position: relative;
+    width: 68px;
+    height: 68px;
+    border: 1px solid #7490a5;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+  }
+
+  .volume-knob {
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    background: radial-gradient(
+      circle at 35% 25%,
+      #b5cbd2,
+      #647f91 65%,
+      #344f62
+    );
+    border: 2px solid #c2d0d7;
+    box-shadow: 2px 4px 6px #0005;
+    position: relative;
+    transform: rotate(54deg);
+  }
+
+  .knob-indicator {
+    position: absolute;
+    width: 3px;
+    height: 15px;
+    left: calc(50% - 1.5px);
+    top: 5px;
+    background: #f0f7f8;
+    border-radius: 2px;
+  }
+
+  #volume-control {
+    width: min(95%, 105px);
+    accent-color: #9fd5d8;
+    cursor: pointer;
+  }
+
+  .transport-button {
+    width: 64px;
+    height: 64px;
+    border: 2px solid #9cb2c0;
+    background: linear-gradient(#627e91, #38536b);
+    box-shadow: 0 5px 0 #142638;
+    color: #edf8f8;
+    font-size: 24px;
+    cursor: pointer;
+    transition: transform 0.12s, box-shadow 0.12s;
+  }
+
+  .transport-button:active {
+    transform: translateY(4px);
+    box-shadow: 0 1px 0 #142638;
+  }
+
+  .channel-display {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    padding: 12px;
+    background: #102439;
+    border: 1px solid #55728a;
+    font-size: 12px;
+  }
+
+  .rack-footer {
+    border-top: 1px solid #7891a455;
+    padding-top: 15px;
+    margin-top: 22px;
+    font-size: 9px;
+    letter-spacing: 0.09em;
+    color: #97afc0;
+  }
+
+  @media (max-width: 420px) {
+    .analog-player { padding: 12px; }
+    .analog-controls { gap: 6px; }
+    .control-block { padding: 12px 4px; }
+    .knob-shell { width: 58px; height: 58px; }
+    .volume-knob { width: 46px; height: 46px; }
+    .transport-button { width: 52px; height: 52px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .transport-button { transition: none; }
+  }
+</style>
+
+
+<script>
+  const initializedPlayers = new WeakSet<HTMLAudioElement>();
+
+  function initializePlayer() {
+    const audio = document.querySelector<HTMLAudioElement>("#analog-audio");
+    const play = document.querySelector<HTMLButtonElement>("#audio-play");
+    const symbol = document.querySelector<HTMLElement>("#transport-symbol");
+    const label = document.querySelector<HTMLElement>("#transport-label");
+    const status = document.querySelector<HTMLElement>("#audio-status");
+    const volume = document.querySelector<HTMLInputElement>("#volume-control");
+    const knob = document.querySelector<HTMLElement>("#volume-knob");
+    const seek = document.querySelector<HTMLInputElement>("#audio-seek");
+    const current = document.querySelector<HTMLElement>("#current-time");
+    const total = document.querySelector<HTMLElement>("#total-time");
+    const meter = document.querySelector<HTMLCanvasElement>("#level-meter");
+
+    if (
+      !audio || !play || !symbol || !label || !status ||
+      !volume || !knob || !seek || !current || !total || !meter
+    ) {
+      return;
+    }
+
+    // Don't initialize the same player twice.
+    if (initializedPlayers.has(audio)) return;
+    initializedPlayers.add(audio);
+
+    const context = meter.getContext("2d");
+
+    let audioContext: AudioContext | undefined;
+    let analyser: AnalyserNode | undefined;
+    let animationId = 0;
+    let disposed = false;
+
+    audio.volume = 0.7;
+
+    // ======================================
+    // TIME FORMATTING
+    // ======================================
+
+    const formatTime = (value: number): string => {
+      if (!Number.isFinite(value)) return "00:00";
+
+      const minutes = Math.floor(value / 60);
+      const seconds = Math.floor(value % 60);
+
+      return (
+        String(minutes).padStart(2, "0") +
+        ":" +
+        String(seconds).padStart(2, "0")
+      );
+    };
+
+    // ======================================
+    // PLAY / PAUSE DISPLAY
+    // ======================================
+
+    const updateTransport = () => {
+      const playing = !audio.paused;
+
+      symbol.textContent = playing ? "Ⅱ" : "▶";
+      label.textContent = playing ? "PAUSE" : "PLAY";
+
+      play.setAttribute(
+        "aria-label",
+        playing ? "Pause audio" : "Play audio"
+      );
+
+      status.textContent = playing ? "PLAYING" : "STANDBY";
+    };
+
+    // ======================================
+    // VOLUME CONTROL
+    // ======================================
+
+    const updateVolume = () => {
+      const amount = Number(volume.value);
+
+      audio.volume = amount / 100;
+
+      const rotation = -135 + amount * 2.7;
+      knob.style.transform = `rotate(${rotation}deg)`;
+    };
+
+    volume.addEventListener("input", updateVolume);
+
+    // ======================================
+    // TRACK PROGRESS
+    // ======================================
+
+    const updateProgress = () => {
+      current.textContent = formatTime(audio.currentTime);
+
+      if (
+        Number.isFinite(audio.duration) &&
+        audio.duration > 0
+      ) {
+        seek.value = String(
+          (audio.currentTime / audio.duration) * 100
+        );
+      }
+    };
+
+    seek.addEventListener("input", () => {
+      if (
+        Number.isFinite(audio.duration) &&
+        audio.duration > 0
+      ) {
+        audio.currentTime =
+          (Number(seek.value) / 100) * audio.duration;
+      }
+    });
+
+    audio.addEventListener("loadedmetadata", () => {
+      total.textContent = formatTime(audio.duration);
+    });
+
+    audio.addEventListener("timeupdate", updateProgress);
+
+    // ======================================
+    // WEB AUDIO ANALYZER
+    // ======================================
+
+    const initializeMeter = () => {
+      if (audioContext) return;
+
+      audioContext = new AudioContext();
+
+      const source =
+        audioContext.createMediaElementSource(audio);
+
+      analyser = audioContext.createAnalyser();
+
+      analyser.fftSize = 4096;
+      analyser.smoothingTimeConstant = 0.75;
+      analyser.minDecibels = -90;
+      analyser.maxDecibels = -15;
+
+      source.connect(analyser);
+      analyser.connect(audioContext.destination);
+    };
+
+    // ======================================
+    // LOGARITHMIC FREQUENCY ANALYZER
+    // ======================================
+
+    const drawMeter = () => {
+      if (
+        !context ||
+        !analyser ||
+        !audioContext ||
+        disposed
+      ) {
+        return;
+      }
+
+      const data = new Uint8Array(
+        analyser.frequencyBinCount
+      );
+
+      analyser.getByteFrequencyData(data);
+
+      const w = meter.width;
+      const h = meter.height;
+
+      context.clearRect(0, 0, w, h);
+
+      const bars = 32;
+      const gap = 3;
+      const barWidth = (w - gap * (bars - 1)) / bars;
+
+      const minFrequency = 30;
+
+      const maxFrequency = Math.min(
+        16000,
+        audioContext.sampleRate / 2
+      );
+
+      const binWidth =
+        audioContext.sampleRate / analyser.fftSize;
+
+      for (let i = 0; i < bars; i++) {
+        const lowFrequency =
+          minFrequency *
+          Math.pow(
+            maxFrequency / minFrequency,
+            i / bars
+          );
+
+        const highFrequency =
+          minFrequency *
+          Math.pow(
+            maxFrequency / minFrequency,
+            (i + 1) / bars
+          );
+
+        const startBin = Math.max(
+          1,
+          Math.floor(lowFrequency / binWidth)
+        );
+
+        const endBin = Math.min(
+          data.length - 1,
+          Math.max(
+            startBin,
+            Math.ceil(highFrequency / binWidth)
+          )
+        );
+
+        let sum = 0;
+        let count = 0;
+
+        for (
+          let bin = startBin;
+          bin <= endBin;
+          bin++
+        ) {
+          const value = data[bin] / 255;
+
+          sum += value * value;
+          count++;
+        }
+
+        const level = Math.sqrt(
+          sum / Math.max(1, count)
+        );
+
+        const barHeight = Math.max(
+          2,
+          Math.min(h - 8, level * (h - 8))
+        );
+
+        if (highFrequency < 250) {
+          context.fillStyle = "#9FD5D8";
+        } else if (highFrequency < 4000) {
+          context.fillStyle = "#86A9DB";
+        } else {
+          context.fillStyle = "#C1B7E4";
+        }
+
+        context.fillRect(
+          i * (barWidth + gap),
+          h - barHeight,
+          barWidth,
+          barHeight
+        );
+      }
+
+      if (!audio.paused && !disposed) {
+        animationId = requestAnimationFrame(drawMeter);
+      }
+    };
+
+    const stopMeter = () => {
+      cancelAnimationFrame(animationId);
+      animationId = 0;
+
+      if (context) {
+        context.clearRect(
+          0,
+          0,
+          meter.width,
+          meter.height
+        );
+      }
+    };
+
+    // ======================================
+    // PLAYBACK BUTTON
+    // ======================================
+
+    play.addEventListener("click", async () => {
+      if (audio.paused) {
+        try {
+          initializeMeter();
+
+          if (audioContext?.state === "suspended") {
+            await audioContext.resume();
+          }
+
+          await audio.play();
+        } catch (error) {
+          status.textContent = "PLAYBACK ERROR";
+          console.error("Audio playback failed:", error);
+        }
+      } else {
+        audio.pause();
+      }
+    });
+
+    // ======================================
+    // AUDIO EVENTS
+    // ======================================
+
+    audio.addEventListener("play", () => {
+      updateTransport();
+      cancelAnimationFrame(animationId);
+      drawMeter();
+    });
+
+    audio.addEventListener("pause", () => {
+      updateTransport();
+      stopMeter();
+    });
+
+    audio.addEventListener("ended", () => {
+      updateTransport();
+      updateProgress();
+      stopMeter();
+    });
+
+    audio.addEventListener("error", () => {
+      status.textContent = "AUDIO ERROR";
+      stopMeter();
+    });
+
+    // ======================================
+    // PERSISTENT NAVIGATION
+    // ======================================
+
+    // The audio element should remain mounted across
+    // Astro ClientRouter navigation.
+    //
+    // Do NOT pause audio or close AudioContext
+    // during astro:before-swap.
+
+    // On actual removal, clean up audio resources.
+    const observer = new MutationObserver(() => {
+      if (!audio.isConnected && !disposed) {
+        disposed = true;
+
+        audio.pause();
+        cancelAnimationFrame(animationId);
+        void audioContext?.close();
+
+        observer.disconnect();
+      }
+    });
+
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+    });
+
+    // ======================================
+    // INITIAL STATE
+    // ======================================
+
+    updateVolume();
+    updateTransport();
+    updateProgress();
+
+    if (audio.readyState >= 1) {
+      total.textContent = formatTime(audio.duration);
+    }
+  }
+
+  // Run on the first load and after Astro navigation.
+  document.addEventListener("astro:page-load", initializePlayer);
+
+  // Also initialize if the script executes after
+  // the first page-load event.
+  initializePlayer();
+</script>

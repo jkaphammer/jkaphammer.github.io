@@ -1,20 +1,86 @@
 ---
 import BaseLayout from "../layouts/Layout.astro";
+import ProjectIndex from "../components/ProjectIndex.astro";
+import { projects } from "../data/projects";
+
+const tags = [
+  "All",
+  ...new Set(projects.flatMap((project) => project.tags)),
+];
 ---
 
-<BaseLayout
-	title="Kaphammer | Projects"
-	description="Projects and case studies from Jenn Kaphammer."
->
-	<main class="mx-auto w-full max-w-site px-4 py-10 sm:px-6 lg:px-8">
-		<section class="rounded-panel border border-midnight-violet-200/45 bg-[linear-gradient(145deg,color-mix(in_oklab,var(--palette-sky-aqua-50)_62%,white),color-mix(in_oklab,var(--palette-midnight-violet-50)_32%,white))] p-6 shadow-soft backdrop-blur md:p-8">
-			<p class="mb-4 text-xs font-semibold uppercase tracking-[0.28em] text-midnight-violet-700">Projects</p>
-			<h1 class="font-display text-4xl leading-tight tracking-[-0.04em] text-baltic-blue-950 sm:text-5xl">
-				Projects
-			</h1>
-			<p class="mt-4 max-w-2xl text-base leading-8 text-baltic-blue-700">
-				In-progress
-			</p>
-		</section>
-	</main>
+<BaseLayout title="Jenn Kaphammer | Project Index">
+  <main class="mx-auto max-w-[1500px] px-5 pb-24 pt-16 sm:px-8 lg:px-12">
+    <header class="mb-16">
+      <p class="font-technical mb-6 text-xs uppercase tracking-wider text-sky-aqua-700">
+        Archive / Projects
+      </p>
+
+      <h1 class="font-expressive text-[clamp(4rem,10vw,9rem)] font-extrabold leading-[0.9] tracking-[-0.07em] text-baltic-blue-950">
+        PROJECT
+        <span class="font-editorial font-normal italic text-midnight-violet-500">
+          portfolio.
+        </span>
+      </h1>
+
+      <p class="mt-8 max-w-xl text-base leading-8 text-baltic-blue-700">
+        Software engineering, audio, interactive media, and experiments.
+      </p>
+    </header>
+
+    <div class="font-technical mb-10 flex flex-wrap gap-x-5 gap-y-3 border-y border-baltic-blue-300/70 py-5">
+      {tags.map((tag) => (
+        <button
+          type="button"
+          class="project-filter text-xs uppercase tracking-wide text-baltic-blue-600 transition-colors hover:text-baltic-blue-950 aria-pressed:text-midnight-violet-700 aria-pressed:underline"
+          data-filter={tag}
+          aria-pressed={tag === "All" ? "true" : "false"}
+        >
+          {tag}
+        </button>
+      ))}
+    </div>
+
+    <ProjectIndex projects={projects} />
+
+    <p id="no-results" hidden class="mt-8 text-baltic-blue-700">
+      No projects match that tag.
+    </p>
+  </main>
 </BaseLayout>
+
+<script>
+  const buttons = document.querySelectorAll<HTMLButtonElement>(".project-filter");
+  const rows = document.querySelectorAll<HTMLElement>(".project-row");
+
+  buttons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const selected = button.dataset.filter;
+      let count = 0;
+
+      buttons.forEach((item) => {
+        item.setAttribute("aria-pressed", String(item === button));
+      });
+
+      rows.forEach((row) => {
+        const tags: string[] = JSON.parse(row.dataset.tags ?? "[]");
+        const visible =
+          selected === "All" ||
+          (selected !== undefined && tags.includes(selected));
+
+        row.hidden = !visible;
+        if (visible) count++;
+      });
+
+      const empty = document.querySelector<HTMLElement>("#no-results");
+      if (empty) empty.hidden = count > 0;
+    });
+  });
+</script>
+
+<style>
+  .project-row[hidden],
+  #no-results[hidden] {
+    display: none;
+  }
+</style>
