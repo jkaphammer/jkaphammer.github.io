@@ -3,12 +3,13 @@ import BaseLayout from "../layouts/Layout.astro";
 import SignalCanvas from "../components/SignalCanvas.astro";
 import ProjectIndex from "../components/ProjectIndex.astro";
 import { projects } from "../data/projects";
+import MusicPlayer from "../components/MusicPlayer.astro";
 
 const featuredProjects = projects.filter((project) => project.featured);
 ---
 
 <BaseLayout
-  title="Jenn Kaphammer | Creative Engineering"
+  title="Home | J. Kaphammer"
   description="Software engineering, audio technology, and interactive systems."
 >
   <main class="mx-auto max-w-[1500px] px-5 sm:px-8 lg:px-12">
@@ -16,58 +17,54 @@ const featuredProjects = projects.filter((project) => project.featured);
     <!-- Typographic hero -->
     <section class="relative grid gap-12 border-b border-baltic-blue-700/70 py-14 lg:grid-cols-12 lg:gap-8 lg:py-24">
 
-      <div class="relative z-10 min-w-0 lg:col-span-8">
-        <p class="font-technical mb-12 text-[11px] uppercase tracking-[0.18em] text-sky-aqua-700">
+      <!-- LEFT SIDE -->
+      <div class="relative z-10 min-w-0 lg:col-span-7">
+
+        <p class="font-technical text-[10px] uppercase tracking-[0.24em] text-baltic-blue-700">
           Software / Sound / Creative Systems
         </p>
 
-        <h1 class="font-expressive text-[clamp(3.4rem,9vw,10rem)] font-extrabold leading-[0.85] tracking-[-0.085em] text-baltic-blue-950">
+        <h1 class="font-brand mt-10 text-[clamp(3.4rem,9vw,10rem)] font-extrabold leading-[0.85] tracking-[-0.085em] text-baltic-blue-950">
           jenn
           <br />
           <span class="block">
-            kaphammer<span class="text-sky-aqua-500">.</span>
+            kaphammer
           </span>
         </h1>
 
-        <p class="font-editorial mt-10 text-[clamp(2.8rem,5vw,5.5rem)] italic leading-none text-midnight-violet-500 lg:ml-16">
-          exploring the intersections of art & science.
+        <p class="mt-10 max-w-md text-sm leading-7 text-baltic-blue-900 sm:text-base">
+          SWE, creative, current M.S. student at CU Boulder.
+          I'm most interested in the intersection of ML/SWE with audio and other creative systems.
         </p>
 
-        <div class="mt-14 grid max-w-2xl gap-8 md:grid-cols-2 lg:ml-16">
-          <p class="text-lg leading-8 text-baltic-blue-950">
-            Software engineer, musician, and current computer science master's student.
-          </p>
-
-          <p class="text-sm leading-7 text-baltic-blue-700">
-            Interested in building thoughtful systems at the intersection
-            of software, sound, and human interaction.
-          </p>
+        <div class="mt-10 max-w-2xl">
+          <MusicPlayer
+            src="/debussy1.mp3"
+            title="Arabesque No. 1, L. 66"
+            artist="Claude Debussy"
+          />
         </div>
 
         <a
           href="#selected-work"
-          class="font-technical mt-12 inline-flex gap-3 border-b border-sky-aqua-600 pb-2 text-xs uppercase tracking-wider text-baltic-blue-900 transition-colors hover:text-sky-aqua-700 lg:ml-16"
+          class="font-technical mt-10 inline-flex gap-3 border-b border-sky-aqua-600 pb-2 text-xs uppercase tracking-wider text-baltic-blue-900 transition-colors hover:text-sky-aqua-700"
         >
-          Explore selected work
-          <span aria-hidden="true">↘</span>
+          Explore selected work ↘
         </a>
+
       </div>
 
-      <!-- Interactive graphic -->
-      <div class="flex min-w-0 flex-col justify-end gap-8 lg:col-span-4">
-        <p class="font-technical hidden self-end text-[10px] uppercase tracking-widest text-baltic-blue-600 lg:block">
-          (≽^•˕•^≼)
-        </p>
-
-        <div class="lg:-ml-8">
-          <SignalCanvas />
+      <!-- RIGHT SIDE PHOTO -->
+      <div class="flex min-w-0 items-center justify-center lg:col-span-5 lg:justify-end">
+        <div class="w-full max-w-[520px]">
+          <img
+            src="/jenn-photo.jpg"
+            alt="Portrait of Jenn Kaphammer"
+            class="aspect-[4/5] w-full object-cover"
+          />
         </div>
       </div>
 
-      <div class="font-technical flex flex-wrap justify-between gap-3 text-[11px] uppercase tracking-wider text-baltic-blue-600 lg:col-span-12">
-        <span>Portfolio / 2026</span>
-        <span>Creative engineering ↗</span>
-      </div>
     </section>
 
     <!-- Editorial portfolio -->
@@ -80,10 +77,7 @@ const featuredProjects = projects.filter((project) => project.featured);
           </p>
 
           <h2 class="font-expressive text-5xl font-bold tracking-tight text-baltic-blue-950 sm:text-6xl lg:text-7xl">
-            Selected
-            <span class="font-editorial font-normal italic text-midnight-violet-500">
-              work.
-            </span>
+            selected work
           </h2>
         </div>
 

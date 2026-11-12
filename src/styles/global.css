@@ -1,19 +1,6 @@
 
 @import "tailwindcss";
 
-/*
- * KEEP YOUR EXISTING @theme BLOCK HERE.
- *
- * This includes your custom Tailwind colors:
- * - baltic-blue
- * - sky-aqua
- * - midnight-violet
- * - tea-green
- *
- * Also keep any custom widths, shadows,
- * and other theme settings you already defined.
- */
-
 /* =========================================
    EDITORIAL COLOR PALETTE
    ========================================= */
@@ -39,7 +26,7 @@ body {
   margin: 0;
   background-color: var(--editorial-paper);
   color: var(--editorial-ink);
-  font-family: "DM Sans", sans-serif;
+  font-family: "Schibsted Grotesk", sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -47,16 +34,20 @@ body {
    TYPOGRAPHY
    ========================================= */
 
+.font-brand {
+  font-family: "Fredoka", sans-serif;
+}
+
 .font-expressive {
-  font-family: "Bricolage Grotesque", sans-serif;
+  font-family: "Schibsted Grotesk", sans-serif;
 }
 
 .font-editorial {
-  font-family: "Instrument Serif", Georgia, serif;
+  font-family: "Literata", Georgia, serif;
 }
 
 .font-technical {
-  font-family: "IBM Plex Mono", monospace;
+  font-family: "Azeret Mono", monospace;
 }
 
 /* =========================================

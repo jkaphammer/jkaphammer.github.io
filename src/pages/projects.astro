@@ -9,26 +9,30 @@ const tags = [
 ];
 ---
 
-<BaseLayout title="Jenn Kaphammer | Project Index">
+<BaseLayout title="Portfolio | J. Kaphammer">
   <main class="mx-auto max-w-[1500px] px-5 pb-24 pt-16 sm:px-8 lg:px-12">
+
     <header class="mb-16">
       <p class="font-technical mb-6 text-xs uppercase tracking-wider text-sky-aqua-700">
         Archive / Projects
       </p>
 
-      <h1 class="font-expressive text-[clamp(4rem,10vw,9rem)] font-extrabold leading-[0.9] tracking-[-0.07em] text-baltic-blue-950">
-        PROJECT
-        <span class="font-editorial font-normal italic text-midnight-violet-500">
-          portfolio.
-        </span>
+      <h1
+        class="font-expressive text-[clamp(4rem,10vw,9rem)] font-extrabold leading-[0.9] tracking-[-0.07em] text-baltic-blue-950"
+      >
+        my projects
       </h1>
 
       <p class="mt-8 max-w-xl text-base leading-8 text-baltic-blue-700">
-        Software engineering, audio, interactive media, and experiments.
+        Software engineering, music, interactive media, research, and experiments.
       </p>
     </header>
 
-    <div class="font-technical mb-10 flex flex-wrap gap-x-5 gap-y-3 border-y border-baltic-blue-300/70 py-5">
+    <!-- FILTER BAR -->
+    <div
+      class="font-technical mb-10 flex flex-wrap gap-x-5 gap-y-3 border-y border-baltic-blue-300/70 py-5"
+      aria-label="Filter projects by category"
+    >
       {tags.map((tag) => (
         <button
           type="button"
@@ -41,41 +45,111 @@ const tags = [
       ))}
     </div>
 
+    <!-- PROJECTS -->
     <ProjectIndex projects={projects} />
 
-    <p id="no-results" hidden class="mt-8 text-baltic-blue-700">
-      No projects match that tag.
+    <!-- EMPTY STATE -->
+    <p
+      id="no-results"
+      hidden
+      class="font-technical mt-8 text-xs uppercase tracking-wide text-baltic-blue-700"
+    >
+      No projects match those tags.
     </p>
+
   </main>
 </BaseLayout>
 
 <script>
-  const buttons = document.querySelectorAll<HTMLButtonElement>(".project-filter");
-  const rows = document.querySelectorAll<HTMLElement>(".project-row");
+  const buttons =
+    document.querySelectorAll<HTMLButtonElement>(".project-filter");
+
+  const rows =
+    document.querySelectorAll<HTMLElement>(".project-row");
+
+  const selectedTags = new Set<string>();
+
+  function updateButtons() {
+    buttons.forEach((button) => {
+      const tag = button.dataset.filter;
+
+      if (!tag) {
+        return;
+      }
+
+      const active =
+        tag === "All"
+          ? selectedTags.size === 0
+          : selectedTags.has(tag);
+
+      button.setAttribute(
+        "aria-pressed",
+        String(active)
+      );
+    });
+  }
+
+  function updateProjects() {
+    let visibleCount = 0;
+
+    rows.forEach((row) => {
+      const projectTags: string[] =
+        JSON.parse(row.dataset.tags ?? "[]");
+
+      /*
+       * Multi-select uses AND behavior.
+       *
+       * Example:
+       * Audio + Web
+       *
+       * requires the project to contain
+       * both "Audio" and "Web".
+       */
+      const visible =
+        selectedTags.size === 0 ||
+        [...selectedTags].every((tag) =>
+          projectTags.includes(tag)
+        );
+
+      row.hidden = !visible;
+
+      if (visible) {
+        visibleCount++;
+      }
+    });
+
+    const empty =
+      document.querySelector<HTMLElement>("#no-results");
+
+    if (empty) {
+      empty.hidden = visibleCount > 0;
+    }
+  }
 
   buttons.forEach((button) => {
     button.addEventListener("click", () => {
-      const selected = button.dataset.filter;
-      let count = 0;
+      const selected =
+        button.dataset.filter;
 
-      buttons.forEach((item) => {
-        item.setAttribute("aria-pressed", String(item === button));
-      });
+      if (!selected) {
+        return;
+      }
 
-      rows.forEach((row) => {
-        const tags: string[] = JSON.parse(row.dataset.tags ?? "[]");
-        const visible =
-          selected === "All" ||
-          (selected !== undefined && tags.includes(selected));
+      if (selected === "All") {
+        selectedTags.clear();
+      } else if (selectedTags.has(selected)) {
+        selectedTags.delete(selected);
+      } else {
+        selectedTags.add(selected);
+      }
 
-        row.hidden = !visible;
-        if (visible) count++;
-      });
-
-      const empty = document.querySelector<HTMLElement>("#no-results");
-      if (empty) empty.hidden = count > 0;
+      updateButtons();
+      updateProjects();
     });
   });
+
+  updateButtons();
+  updateProjects();
 </script>
 
 <style>
