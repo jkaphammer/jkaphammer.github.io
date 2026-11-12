@@ -1,7 +1,5 @@
 # jkaphammer.github.io
-Hi, I'm Jenn. Welcome to my little portfolio website! kaphammer.xyz
-
-## This domain is under construction while I migrate from a class project to a full tech-stack. In the mean time, connect with me on https://www.linkedin.com/in/jenn-kaphammer/
+Hi, I'm Jenn. Welcome to my portfolio website! kaphammer.xyz
 
 ## Website's Tech Stack
-Astro (framework) + TypeScript (safety) + Tailwind (styling) + Vite (build tool) → GitLab Pages (hosting)
+Astro (framework) + TypeScript (safety) + Tailwind (styling) + Vite (build tool) -> GitLab Pages (hosting)
