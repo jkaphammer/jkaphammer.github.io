@@ -1,0 +1,101 @@
+---
+import BaseLayout from "../layouts/Layout.astro";
+---
+
+<BaseLayout
+  title="Resume | Jenn Kaphammer"
+  description="Resume and academic CV for Jenn Kaphammer."
+>
+  <main class="mx-auto max-w-[1500px] px-5 pb-24 pt-16 sm:px-8 lg:px-12">
+
+    <header class="mb-16 border-b border-baltic-blue-700/70 pb-12">
+      <p class="font-technical mb-6 text-xs uppercase tracking-wider text-sky-aqua-700">
+        Documents / Experience
+      </p>
+
+      <h1 class="font-expressive text-[clamp(4rem,10vw,9rem)] font-extrabold leading-[0.9] tracking-[-0.07em] text-baltic-blue-950">
+        my resume + cv
+      </h1>
+
+      <p class="mt-8 max-w-xl text-base leading-8 text-baltic-blue-700">
+        Industry experience, research, technical projects, and academic work.
+        See my resume for the short version, and CV for full details.
+      </p>
+    </header>
+
+    <section class="grid gap-6 md:grid-cols-2">
+
+      <!-- RESUME -->
+      <article class="border border-baltic-blue-700/40 p-6 sm:p-8">
+        <div class="flex h-full flex-col gap-8">
+
+          <div>
+            <p class="font-technical text-[9px] uppercase tracking-[0.18em] text-sky-aqua-700">
+              01
+            </p>
+
+            <h2 class="font-expressive mt-4 text-3xl font-semibold text-baltic-blue-950">
+              Resume
+            </h2>
+          </div>
+
+          <div class="flex flex-wrap gap-4">
+            <a
+              href="/JKaphammer_Resume_112026.pdf"
+              download
+              class="font-technical border-b border-baltic-blue-500 pb-1 text-xs uppercase tracking-wider text-baltic-blue-700 transition-colors hover:text-baltic-blue-950"
+            >
+              Download PDF ↓
+            </a>
+          </div>
+
+          <div class="overflow-hidden border border-baltic-blue-700/40 bg-white">
+            <iframe
+              src="/JKaphammer_Resume_112026.pdf"
+              title="Jenn Kaphammer Resume"
+              class="h-[1100px] w-full"
+            ></iframe>
+          </div>
+
+        </div>
+      </article>
+
+      <!-- CV -->
+      <article class="border border-baltic-blue-700/40 p-6 sm:p-8">
+        <div class="flex h-full flex-col gap-8">
+
+          <div>
+            <p class="font-technical text-[9px] uppercase tracking-[0.18em] text-midnight-violet-500">
+              02
+            </p>
+
+            <h2 class="font-expressive mt-4 text-3xl font-semibold text-baltic-blue-950">
+              Curriculum Vitae
+            </h2>
+          </div>
+
+          <div class="flex flex-wrap gap-4">
+            <a
+              href="JKaphammer_CV_2025.pdf"
+              download
+              class="font-technical border-b border-baltic-blue-500 pb-1 text-xs uppercase tracking-wider text-baltic-blue-700 transition-colors hover:text-baltic-blue-950"
+            >
+              Download PDF ↓
+            </a>
+          </div>
+
+          <div class="overflow-hidden border border-baltic-blue-700/40 bg-white">
+            <iframe
+              src="/JKaphammer_CV_2025.pdf"
+              title="Jenn Kaphammer Curriculum Vitae"
+              class="h-[1100px] w-full"
+            ></iframe>
+          </div>
+
+        </div>
+      </article>
+
+    </section>
+
+  </main>
+</BaseLayout>
