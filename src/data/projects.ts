@@ -17,9 +17,30 @@ export interface Project {
   href?: string;
   github?: string;
   video?: string;
+  disclosureNote?: string;
 }
-
+// Organized from most recently updated/oldest
 export const projects: Project[] = [
+  
+  {
+  title: "UrbanSound8K Noise Event Classification",
+  description:
+    "Built and evaluated an audio machine learning pipeline for classifying urban sound events using engineered acoustic features. Compared logistic regression, random forest, PCA, and heuristic baselines with fold-aware validation, threshold tuning, and reproducible model evaluation focused on precision-sensitive noise-event triage.",
+  tags: ["ML", "Audio", "Research"],
+  techStack: [
+    "Python",
+    "pandas",
+    "NumPy",
+    "librosa",
+    "scikit-learn",
+    "Matplotlib"
+  ],
+  year: "2026",
+  featured: true,
+  status: "Completed",
+  href: "https://github.com/jkaphammer/UrbanSound-Analysis/blob/main/UrbanSound.ipynb",
+  github: "https://github.com/jkaphammer/UrbanSound-Analysis"
+  },
   {
     title: "Interactive Game Audio System",
     description:
@@ -36,6 +57,7 @@ export const projects: Project[] = [
     year: "2026",
     featured: true,
     status: "In Progress",
+    github: "https://github.com/jkaphammer/interactive-audio-systems"
   },
 
   {
@@ -52,7 +74,7 @@ export const projects: Project[] = [
       "CSS",
     ],
     year: "2024",
-    featured: true,
+    featured: false,
     status: "Completed",
     github: "https://github.com/jkaphammer/freesoundAPI-Generation",
     video: "https://youtu.be/EhLKBfwSlK0?si=djKVbGkeRUFBxuKd",
@@ -75,6 +97,7 @@ export const projects: Project[] = [
     year: "2024–2025",
     featured: true,
     status: "Completed",
+    disclosureNote: "Source code and datasets are not publicly available due to proprietary or restricted research data."
   },
 
   {
@@ -93,12 +116,13 @@ export const projects: Project[] = [
       "ZFIN",
     ],
     year: "2025",
-    featured: true,
+    featured: false,
     status: "Completed",
+    github: "https://github.com/jkaphammer/ZFIN-phenotype-prediction"
   },
 
   {
-    title: "Cross-Data-Center Failover System",
+    title: "Cross-Data-Center Failover System - Spectrum",
     description:
       "High-availability engineering project developed during a systems engineering internship to improve service reliability across data centers through health checks, failover behavior, and distributed infrastructure integration.",
     tags: ["Systems"],
@@ -115,10 +139,11 @@ export const projects: Project[] = [
     year: "2025",
     featured: true,
     status: "Completed",
+    disclosureNote: "Source code and live demo are unavailable because this work was completed using proprietary company systems and data."
   },
 
   {
-    title: "Production Systems & Observability",
+    title: "Production Systems & Observability - Spectrum",
     description:
       "Production reliability and troubleshooting work across distributed Linux systems, including service diagnostics, automation, observability, API analysis, and infrastructure support.",
     tags: ["Systems"],
@@ -134,6 +159,7 @@ export const projects: Project[] = [
     year: "2026",
     featured: false,
     status: "Completed",
+    disclosureNote: "Source code and live demo are unavailable because this work was completed using proprietary company systems and data."
   },
 
   {
@@ -173,7 +199,7 @@ export const projects: Project[] = [
       "Canvas API",
     ],
     year: "2026",
-    featured: true,
+    featured: false,
     status: "In Progress",
     github: "https://github.com/jkaphammer/jkaphammer.github.io",
   },
